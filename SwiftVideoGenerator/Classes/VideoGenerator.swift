@@ -189,10 +189,27 @@ public class VideoGenerator: NSObject {
                   elapsedTime += VideoGenerator.current.audioDurations[frameCount] <= 1 ? VideoGenerator.current.minSingleVideoDuration : VideoGenerator.current.audioDurations[frameCount]
                 } else {
                   nextStartTimeForFrame = frameCount == 0 ? CMTime(seconds: 0, preferredTimescale: 600) : CMTime(seconds: Double(elapsedTime), preferredTimescale: 600)
+                    
+                    
+                    if VideoGenerator.current.audioDurations.count > 0
+                    {
+                        let audio_Time = VideoGenerator.current.audioDurations[0]
+                        let total_Images = VideoGenerator.current.images.count
+                        elapsedTime += audio_Time / Double(total_Images)
+                    }
+                    else // when no audio file found
+                    {
+                        if self.videoDurationInSeconds == 0
+                        {
+                            elapsedTime += 5
+                        }
+                        else
+                        {
+                            elapsedTime += self.videoDurationInSeconds / Double(self.images.count)
+                        }
+                    }
                   
-                  let audio_Time = VideoGenerator.current.audioDurations[0]
-                  let total_Images = VideoGenerator.current.images.count
-                  elapsedTime += audio_Time / Double(total_Images)
+                  
                 }
               }
               

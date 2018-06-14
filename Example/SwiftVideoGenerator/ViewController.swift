@@ -73,7 +73,14 @@ class ViewController: UIViewController {
       VideoGenerator.current.fileName = MultipleMovieFileName
       VideoGenerator.current.videoBackgroundColor = .red
       VideoGenerator.current.videoImageWidthForMultipleVideoGeneration = 2000
-      
+        
+      //For without audio set below parameters
+        /*
+        type = singleAudioMultipleImage
+         andAudios = []
+         VideoGenerator.current.videoDurationInSeconds = 30 (per image 10 seconds)
+         */
+        
       VideoGenerator.current.generate(withImages: [#imageLiteral(resourceName: "image1"), #imageLiteral(resourceName: "image2"), #imageLiteral(resourceName: "image3")], andAudios: [audioURL1, audioURL2, audioURL3], andType: .multiple, { (progress) in
         print(progress)
       }, success: { (url) in
@@ -89,6 +96,31 @@ class ViewController: UIViewController {
       self.createAlertView(message: MissingAudioFiles)
     }
   }
+    
+    //MARK:- Generate Video Without Audio
+    func generateVideoWithoutAudio()
+    {
+        LoadingView.lockView()
+        
+        VideoGenerator.current.fileName = MultipleMovieFileName
+        VideoGenerator.current.videoBackgroundColor = .red
+        VideoGenerator.current.videoImageWidthForMultipleVideoGeneration = 2000
+        
+        VideoGenerator.current.videoDurationInSeconds = 30 // it will take 10 second per image - (default value 5 sec per image)
+        
+        VideoGenerator.current.generate(withImages: [#imageLiteral(resourceName: "image1"), #imageLiteral(resourceName: "image2"), #imageLiteral(resourceName: "image3")], andAudios: [], andType: .singleAudioMultipleImage, { (progress) in
+            print(progress)
+        }, success: { (url) in
+            LoadingView.unlockView()
+            print(url)
+            self.createAlertView(message: self.FnishedMultipleVideoGeneration)
+        }, failure: { (error) in
+            LoadingView.unlockView()
+            print(error)
+            self.createAlertView(message: error.localizedDescription)
+        })
+    }
+    
   
   /// Public method to handle the click in the generateSingleAudioMultipleImageButton
   /// Generates a multiple type video from multiple images and single audio
