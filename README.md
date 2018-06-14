@@ -246,7 +246,7 @@ if let videoURL1 = Bundle.main.url(forResource: Video1, withExtension: MOVExtens
   self.createAlertView(message: self.MissingVideoFiles)
 }
 
-**Generate Video Without Audio**
+** Generate Video Without Audio **
 
     func generateVideoWithoutAudio()
     {
