@@ -245,6 +245,30 @@ if let videoURL1 = Bundle.main.url(forResource: Video1, withExtension: MOVExtens
 } else {
   self.createAlertView(message: self.MissingVideoFiles)
 }
+
+//MARK:- Generate Video Without Audio
+    func generateVideoWithoutAudio()
+    {
+        LoadingView.lockView()
+        
+        VideoGenerator.current.fileName = MultipleMovieFileName
+        VideoGenerator.current.videoBackgroundColor = .red
+        VideoGenerator.current.videoImageWidthForMultipleVideoGeneration = 2000
+        
+        VideoGenerator.current.videoDurationInSeconds = 30 // it will take 10 second per image - (default value 5 sec per image)
+        
+        VideoGenerator.current.generate(withImages: [#imageLiteral(resourceName: "image1"), #imageLiteral(resourceName: "image2"), #imageLiteral(resourceName: "image3")], andAudios: [], andType: .singleAudioMultipleImage, { (progress) in
+            print(progress)
+        }, success: { (url) in
+            LoadingView.unlockView()
+            print(url)
+            self.createAlertView(message: self.FnishedMultipleVideoGeneration)
+        }, failure: { (error) in
+            LoadingView.unlockView()
+            print(error)
+            self.createAlertView(message: error.localizedDescription)
+        })
+    }
 ```
 You need to provide the file's URL and optionally a new name for the split video file. The **atStartTime** and **andEndTime** properties mark the start and end of the time range in seconds.
 
