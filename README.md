@@ -246,7 +246,8 @@ if let videoURL1 = Bundle.main.url(forResource: Video1, withExtension: MOVExtens
   self.createAlertView(message: self.MissingVideoFiles)
 }
 
-#### Generate Video Without Audio
+```
+#### Generate Video without Audio
 
     func generateVideoWithoutAudio()
     {
@@ -270,7 +271,8 @@ if let videoURL1 = Bundle.main.url(forResource: Video1, withExtension: MOVExtens
             self.createAlertView(message: error.localizedDescription)
         })
     }
-```
+    ```
+    
 You need to provide the file's URL and optionally a new name for the split video file. The **atStartTime** and **andEndTime** properties mark the start and end of the time range in seconds.
 
 [Exmaple video - split video](https://drive.google.com/open?id=1X26SmtYJk8B9ZKOwU8mXDvcDhLuizDkO)
